@@ -42,3 +42,22 @@ class StripeCustomer(TimeStampedUUIDModel):
         verbose_name = "Stripe Customer"
         verbose_name_plural = "Stripe Customers"
         ordering = ["-created_at"]
+
+
+class Order(TimeStampedUUIDModel):
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    subscription = models.ForeignKey(SubscriptionPlan, on_delete=models.PROTECT)
+    amount = models.IntegerField()
+    session_id = models.CharField(
+        max_length=255, help_text="Received from stripe", blank=True, null=True
+    )
+    api_response = models.JSONField(blank=True, null=True)
+    is_paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "{} - {} - {} - {}".format(self.id, self.user, self.amount, self.is_paid)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Order"
+        verbose_name_plural = "  Orders"

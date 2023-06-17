@@ -121,3 +121,7 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="sk_test_123")
+STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="pk_test_123")
+STRIPE_WEBHOOK_ENDPOINT_SECRET = env("STRIPE_WEBHOOK_ENDPOINT_SECRET", default="abc123")
