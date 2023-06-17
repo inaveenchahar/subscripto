@@ -61,3 +61,19 @@ class Order(TimeStampedUUIDModel):
         ordering = ["-created_at"]
         verbose_name = "Order"
         verbose_name_plural = "  Orders"
+
+
+class UserSubscription(TimeStampedUUIDModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subscription = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE)
+    stripe_subscription_id = models.CharField(max_length=255)
+    valid_from = models.DateTimeField()
+    valid_upto = models.DateTimeField()
+
+    def __str__(self):
+        return "{} - {}".format(self.user.email, self.subscription.name)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "User Subscription"
+        verbose_name_plural = "User Subscriptions"

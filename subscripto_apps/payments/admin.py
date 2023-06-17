@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Order, StripeCustomer, SubscriptionPlan
+from .models import Order, StripeCustomer, SubscriptionPlan, UserSubscription
 
 # Register your models here.
 
@@ -51,3 +51,29 @@ class OrderAdmin(admin.ModelAdmin):
         "updated_at",
     ]
     search_fields = ["id", "user__id", "user__email"]
+
+
+@admin.register(UserSubscription)
+class UserSubscriptionAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "user",
+        "subscription",
+        "valid_from",
+        "valid_upto",
+        "created_at",
+        "updated_at",
+    ]
+    list_filter = [
+        "subscription",
+        "created_at",
+        "updated_at",
+    ]
+    search_fields = [
+        "id",
+        "user__email",
+        "user__id",
+        "user__first_name",
+        "subscription__name",
+        "stripe_subscription_id",
+    ]
