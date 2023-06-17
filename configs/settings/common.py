@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'subscripto_apps.base',
+    'subscripto_apps.payments',
 ]
 
 MIDDLEWARE = [
