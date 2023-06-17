@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %} {% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/base/subscription_plans.css" %}">
+
+{% endblock css %}
+
+{% block content %}
+    {% include "base/navbar.html" %}
+    {% include 'base/messages.html' %}
+    <div class="container-fluid">
+
+        <section class="container py-5">
+            <h1 class="text-center">Subscription Plans</h1>
+            {% include "base/subscription_plans.html" %}
+        </section>
+    </div>
+
+{% endblock content %}

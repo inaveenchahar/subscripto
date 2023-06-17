@@ -1,0 +1,19 @@
+.price-card{
+    border-radius: 10px 10px 10px 10px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.price-card .card-header{
+    border-radius: 10px 10px 0 0;
+}
+.price-card .card-body .body-text{
+    font-size: 14px;
+}
+.price-card .card-body .price-p{
+    font-size: 42px;
+}
+.price-card .card-footer{
+    border-radius: 0 0 10px 10px;
+}
+.price-card a{
+    font-size: 16px;
+    border-radius: 30px;
+}
