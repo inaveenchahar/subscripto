@@ -11,11 +11,15 @@
                         <div class="py-2 body-text"><p>{{ subscription.description }}</p></div>
                     </div>
                     <div class="card-footer border-0 pb-4 px-4 text-center bg-white">
-                        <form method="POST" action="{% url 'payments:checkout_session' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="plan_id" value="{{ subscription.id }}">
-                            <input value="Select Subscription" type="submit" class="submit-btn btn btn-info py-3 px-4 px-md-5 text-center text-white">
-                        </form>
+                        {% if not user_subscription_status %}
+                            <form method="POST" action="{% url 'payments:checkout_session' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="plan_id" value="{{ subscription.id }}">
+                                <input value="Select Subscription" type="submit" class="submit-btn btn btn-info py-3 px-4 px-md-5 text-center text-white">
+                            </form>
+                        {% else %}
+                            <button type="button" class="disabled submit-btn btn btn-info py-3 px-4 px-md-5 text-center text-white">Already Subscribed</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>

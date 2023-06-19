@@ -67,6 +67,7 @@ class UserSubscription(TimeStampedUUIDModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subscription = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE)
     stripe_subscription_id = models.CharField(max_length=255)
+    is_cancelled = models.BooleanField(default=False)
     valid_from = models.DateTimeField()
     valid_upto = models.DateTimeField()
 
