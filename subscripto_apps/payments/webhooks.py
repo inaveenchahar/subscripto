@@ -1,10 +1,12 @@
+from datetime import datetime
+
 import stripe
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Order, StripeCustomer
+from .models import Order, StripeCustomer, SubscriptionPlan, UserSubscription
 
 
 @csrf_exempt
@@ -26,9 +28,8 @@ def my_webhook_view(request):
         return HttpResponse(status=400)
     print("**" * 20, event["type"], "**" * 20)
     if event.type == "invoice.payment_succeeded":
-        print("money deducted")
         session = event["data"]["object"]
-        print(session)
+        add_user_subscription_record(session)
 
     # Handle the checkout.session.completed event
     if event["type"] == "checkout.session.completed":
@@ -62,14 +63,22 @@ def fulfill_order(session):
         if order.is_paid:
             return redirect("payments:success")
         elif session.payment_status == "paid":
-            stripe_customer = StripeCustomer.objects.get(user=order.user)
-            stripe_customer.stripeCustomerId = session.get("customer")
-            stripe_customer.save()
             order.is_paid = True
             order.save()
-            # UserSubscription.objects.create(
-            #     user=order.user,
-            #     order=order,
-            #     subscription=order.subscription,
-            #     stripe_subscription_id=session.get('subscription')
-            # )
+
+
+def add_user_subscription_record(session):
+    stripe_customer = StripeCustomer.objects.get(stripeCustomerId=session.customer)
+    price_id = session["lines"]["data"][0]["price"]["id"]
+    subscription = SubscriptionPlan.objects.get(stripe_price_id=price_id)
+    UserSubscription.objects.create(
+        user=stripe_customer.user,
+        subscription=subscription,
+        stripe_subscription_id=session.get("subscription"),
+        valid_from=datetime.utcfromtimestamp(
+            session["lines"]["data"][0]["period"]["start"]
+        ),
+        valid_upto=datetime.utcfromtimestamp(
+            session["lines"]["data"][0]["period"]["end"]
+        ),
+    )

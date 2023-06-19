@@ -31,6 +31,8 @@ def create_checkout_session(request):
                 stripe_customer = StripeCustomer.objects.create(user=request.user)
             if not stripe_customer.stripeCustomerId:
                 user_full_name = request.user.first_name + " " + request.user.last_name
+                if user_full_name == " ":
+                    user_full_name = request.user.username
                 new_customer = create_new_customer(user_full_name, request.user.email)
                 stripe_customer.stripeCustomerId = new_customer
                 stripe_customer.save()
