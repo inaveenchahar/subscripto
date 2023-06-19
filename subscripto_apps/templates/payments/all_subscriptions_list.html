@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block title %} Home {% endblock title %}
+{% block title %} {% endblock title %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static "css/base/subscription_plans.css" %}">
@@ -13,8 +13,8 @@
     <div class="container-fluid">
 
         <section class="container py-5">
-            <h1 class="text-center">Homepage</h1>
-
+            <h1 class="text-center">Subscription Plans</h1>
+            {% include "payments/subscription_plans.html" %}
         </section>
     </div>
 

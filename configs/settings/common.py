@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'subscripto_apps.base',
+    'subscripto_apps.payments',
 ]
 
 MIDDLEWARE = [
@@ -99,7 +100,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # STATIC
@@ -120,3 +121,7 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="sk_test_123")
+STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="pk_test_123")
+STRIPE_WEBHOOK_ENDPOINT_SECRET = env("STRIPE_WEBHOOK_ENDPOINT_SECRET", default="abc123")

@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% include "base/navbar.html" %}
+    {% include 'base/messages.html' %}
+
+    <div class="container mt-5">
+      <p>You have cancelled the checkout.</p>
+      <p><a href="{% url "base:home" %}">Return to the dashboard</a></p>
+    </div>
+{% endblock content %}
+
